@@ -3,7 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_managment/src/view/const/bottomNavebar.dart';
 import 'package:hospital_managment/src/view/const/colors.dart';
-import 'package:hospital_managment/src/view/doctors/AddDoctor/select_Department.dart';
+import 'package:hospital_managment/src/view/doctors/AddDoctor/department_select.dart';
+
 
 class doctor_List extends StatefulWidget {
   const doctor_List({super.key});
@@ -30,7 +31,7 @@ class _chatHomeState extends State<doctor_List> {
             IconButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => select_deparment()));
+                      MaterialPageRoute(builder: (_) => SelectDepartment()));
                 },
                 icon: const Icon(
                   Icons.person_add_alt,

@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_managment/firebase_options.dart';
 import 'package:hospital_managment/src/controller/department_Controller.dart';
+import 'package:hospital_managment/src/controller/hospital_details_controller.dart';
+import 'package:hospital_managment/src/controller/staff_controller.dart';
 import 'package:hospital_managment/src/view/splashScreen/splashscreen.dart';
 import 'package:provider/provider.dart';
 
@@ -20,8 +22,10 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => departmentController()),
-        // ChangeNotifierProvider(create: (context) => LoginControll())
+        ChangeNotifierProvider(create: (context) => DepartmentController()),
+        ChangeNotifierProvider(create: (context) => HospitalDetailsController()),
+                ChangeNotifierProvider(create: (context) => Staffcontroller())
+
       ],
       child: const MaterialApp(
         home: mysplashScreen(),

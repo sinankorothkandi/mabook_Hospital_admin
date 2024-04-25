@@ -1,16 +1,29 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hospital_managment/src/model/department_model.dart';
 
-class departmentController extends ChangeNotifier {
-    final TextEditingController depadmentController = TextEditingController();
+class DepartmentController extends ChangeNotifier {
+  List<Department> departments = [];
 
-  final DepartmentModel = departmentModel(departmentName: []);
-  addDepatment() {
+  DepartmentController() {
+    fetchDepartments();
+  }
+
+  Future<void> fetchDepartments() async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('departments')
+        .get();
+
+    departments = snapshot.docs.map((doc) => Department.fromFirestore(doc)).toList();
+    notifyListeners();
+  }
+
+  void addDepartment(String name) {
     FirebaseFirestore.instance.collection('departments').add({
-      "Departmentname": depadmentController.text,
+      "Departmentname": name,
     });
-     notifyListeners();
+
+    departments.add(Department("", name));
+    notifyListeners();
   }
 }

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hospital_managment/src/view/appointment/addAppointment/make_appointment.dart';
-import 'package:hospital_managment/src/view/chatScreens/chat_Home.dart';
+import 'package:hospital_managment/src/view/homePage/chatScreens/chat_Home.dart';
 import 'package:hospital_managment/src/view/const/bottomNavebar.dart';
 import 'package:hospital_managment/src/view/const/colors.dart';
-import 'package:hospital_managment/src/view/patient_List/patients_List.dart';
+import 'package:hospital_managment/src/view/homePage/patient_List/patients_List.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

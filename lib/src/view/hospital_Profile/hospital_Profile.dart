@@ -3,14 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hospital_managment/src/view/authendication/LoginPage.dart';
+
 import 'package:hospital_managment/src/view/const/bottomNavebar.dart';
 import 'package:hospital_managment/src/view/const/colors.dart';
-import 'package:hospital_managment/src/view/doctors/AddDoctor/select_Department.dart';
-import 'package:hospital_managment/src/view/hospital_Profile/sub/hospital_details.dart';
+import 'package:hospital_managment/src/view/doctors/AddDoctor/department_select.dart';
+
+import 'package:hospital_managment/src/view/hospital_Profile/sub/hospitalDetails/hospital_details.dart';
 import 'package:hospital_managment/src/view/hospital_Profile/sub/settings/settings_list.dart';
+import 'package:hospital_managment/src/view/homePage/patient_List/patients_List.dart';
 import 'package:hospital_managment/src/view/hospital_Profile/sub/staff/staff_List.dart';
-import 'package:hospital_managment/src/view/patient_List/patients_List.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class hospital_Profile extends StatefulWidget {
@@ -91,7 +92,7 @@ class _chatHomeState extends State<hospital_Profile> {
                           onTap: () {
                              Navigator.push(
                                   context, MaterialPageRoute
-                              (builder:(_)=> select_deparment() ));
+                              (builder:(_)=> SelectDepartment() ));
                           },
                           leading: Icon(Icons.person_add_sharp, color: white),
                           title: Text(
@@ -117,7 +118,7 @@ class _chatHomeState extends State<hospital_Profile> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => staff_List()));
+                                    builder: (_) => StaffList()));
                           },
                           leading: Icon(Icons.group, color: white),
                           title: Text(

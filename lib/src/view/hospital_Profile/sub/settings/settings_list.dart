@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:hospital_managment/src/view/authendication/LoginPage.dart';
+
 import 'package:hospital_managment/src/view/const/bottomNavebar.dart';
 import 'package:hospital_managment/src/view/const/colors.dart';
 import 'package:hospital_managment/src/view/hospital_Profile/sub/staff/staff_List.dart';
@@ -115,7 +115,7 @@ class _chatHomeState extends State<settings_list> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => staff_List()));
+                                    builder: (_) => StaffList()));
                           },
                           leading: Icon(Icons.plagiarism_rounded, color: white),
                           title: Text(
