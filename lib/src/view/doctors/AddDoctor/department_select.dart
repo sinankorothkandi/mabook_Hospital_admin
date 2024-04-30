@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_managment/src/controller/department_Controller.dart';
+import 'package:hospital_managment/src/view/const/colors.dart';
+import 'package:hospital_managment/src/view/doctors/AddDoctor/Add_doctor.dart';
 import 'package:provider/provider.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,10 +18,10 @@ class SelectDepartment extends StatelessWidget {
     final departmentController = Provider.of<DepartmentController>(context);
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: bodyblack,
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.black,
+        backgroundColor: bodyblack,
         title: const Text(
           "Select Department",
           style: TextStyle(
@@ -72,30 +74,41 @@ class SelectDepartment extends StatelessWidget {
                     final departmentName = departmentData['Departmentname'];
 
                     return Padding(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.grey[800]),
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            const FaIcon(
-                              FontAwesomeIcons.heartPulse,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            Text(
-                              departmentName,
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 16),
-                            ),
-                          ],
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 10),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => doctor_add(
+                                        departments: departmentName,
+                                      )));
+                        },
+                        child: Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(19),
+                              color: bodygrey),
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              const FaIcon(
+                                FontAwesomeIcons.heartPulse,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                departmentName,
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 16),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -104,102 +117,107 @@ class SelectDepartment extends StatelessWidget {
               },
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return Container(
-                      height: 300,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[800],
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                          topRight: Radius.circular(25),
+            SizedBox(
+              height: 50,
+              width: 360,
+              child: ElevatedButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        height: 300,
+                        decoration: const BoxDecoration(
+                          color: bodyblack,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25),
+                          ),
                         ),
-                      ),
-                      child: Column(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(top: 20, right: 200),
-                            child: Text(
-                              'Add Department',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22),
-                            ),
-                          ),
-                          const Divider(),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 35, right: 190),
-                            child: Text(
-                              'Enter Department Name',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 17),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 40, vertical: 10),
-                            child: TextFormField(
-                              controller: departmentNameController,
-                              decoration: InputDecoration(
-                                hintText: 'Department Name',
-                                hintStyle: const TextStyle(color: Colors.grey),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.grey[900]!),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
+                        child: Column(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(top: 20, right: 200),
+                              child: Text(
+                                'Add Department',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 22),
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter a department name';
+                            ),
+                            const Divider(),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 35, right: 190),
+                              child: Text(
+                                'Enter Department Name',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 17),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 10),
+                              child: TextFormField(
+                                controller: departmentNameController,
+                                decoration: InputDecoration(
+                                  hintText: 'Department Name',
+                                  hintStyle:
+                                      const TextStyle(color: Colors.grey),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[900]!),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter a department name';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                if (departmentNameController.text.isNotEmpty) {
+                                  departmentController.addDepartment(
+                                      departmentNameController.text);
+                                  departmentNameController.clear();
+                                  Navigator.pop(context);
                                 }
-                                return null;
                               },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.black,
+                              ),
+                              child: const Text(
+                                "Add",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 17),
+                              ),
                             ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              if (departmentNameController.text.isNotEmpty) {
-                                departmentController
-                                    .addDepartment(departmentNameController.text);
-                                departmentNameController.clear();
-                                Navigator.pop(context);
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black,
-                            ),
-                            child: const Text(
-                              "Add",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 17),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
-                minimumSize: const Size(0, 50),
-                backgroundColor: Colors.grey[900],
-              ),
-              child: const Row(
-                children: [
-                  Icon(Icons.add_circle_rounded, color: Colors.white),
-                  SizedBox(width: 40),
-                  Text(
-                    'Add Department',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                ],
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(19)),
+                  minimumSize: const Size(0, 50),
+                  backgroundColor: bodygrey,
+                ),
+                child: const Row(
+                  children: [
+                    Icon(Icons.add_circle_rounded, color: grey),
+                    SizedBox(width: 40),
+                    Text(
+                      'Add Department',
+                      style: TextStyle(color: grey, fontSize: 20),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
 import 'package:hospital_managment/src/view/const/colors.dart';
 import 'package:hospital_managment/src/view/hospital_Profile/sub/staff/addStaff/addStaff.dart';
-import 'package:hospital_managment/src/view/hospital_Profile/sub/staff/addStaff/staff_details.dart';
+import 'package:hospital_managment/src/view/hospital_Profile/sub/staff/staff_details.dart';
 
 class StaffList extends StatelessWidget {
   const StaffList({super.key});
@@ -19,14 +19,14 @@ class StaffList extends StatelessWidget {
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.bold, color: white),
         ),
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.navigate_before,
-              color: white,
-            )),
+        // leading: IconButton(
+        //     onPressed: () {
+        //       Navigator.pop(context);
+        //     },
+        //     icon: const Icon(
+        //       Icons.navigate_before,
+        //       color: white,
+        //     )),
         actions: [
           IconButton(
               onPressed: () {
@@ -74,23 +74,28 @@ class StaffList extends StatelessWidget {
                 return ListTile(
                   leading: profilePath.isNotEmpty
                       ? CircleAvatar(
+                          radius: 25,
+                          backgroundColor: bodyblack,
                           backgroundImage: FileImage(File(profilePath)),
                         )
                       : const CircleAvatar(
-                          child: Icon(Icons.person)), // Default avatar
+                          radius: 25,
+                          backgroundColor: bodyblack,
+                          child: Icon(
+                            Icons.person,
+                            color: grey,
+                          )), // Default avatar
                   title: Text(
                     staffData['name'],
                     style: const TextStyle(color: white),
                   ), // Safe text retrieval
                   subtitle: Text(
-                    'Phone: ${staffData.containsKey("phone_number") ? staffData["phone_number"].toString() : "N/A"}',
+                    'Category: ${staffData.containsKey("category") ? staffData["category"].toString() : "N/A"}',
                     style: const TextStyle(color: grey),
                   ),
-                  trailing: Text(
-                    staffData.containsKey('gender')
-                        ? staffData['gender']
-                        : 'Unknown',
-                    style: const TextStyle(color: grey),
+                  trailing: const Icon(
+                    Icons.navigate_next,
+                    color: white,
                   ),
                   onTap: () {
                     Navigator.push(

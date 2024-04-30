@@ -93,10 +93,10 @@ class staff_add extends StatelessWidget {
                     radius: 50,
                     backgroundImage: stafcontroller.profileImage != null
                         ? FileImage(stafcontroller.profileImage!)
-                        : null, // Use the selected image
+                        : null, 
                     child: stafcontroller.profileImage == null
                         ? const Icon(Icons.add_photo_alternate)
-                        : null, // If no image, show the add photo icon
+                        : null, 
                   ),
                 ),
                 const SizedBox(

@@ -56,19 +56,12 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => const make_Appointment()));
+                          builder: (_) => const MakeAppoinment()));
                 },
                 icon: const Icon(
                   Icons.post_add_sharp,
                   color: white,
                 )),
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.notifications_none,
-                  color: white,
-                  size: 26,
-                ))
           ],
         ),
         body: Column(
@@ -179,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Text(
                     'Available\nDoctors\n     2057',
-                    style: TextStyle(  
+                    style: TextStyle(
                         color: white,
                         fontSize: 25,
                         fontWeight: FontWeight.bold),

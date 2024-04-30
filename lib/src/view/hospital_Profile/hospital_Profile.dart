@@ -3,15 +3,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hospital_managment/src/controller/hospital_details_controller.dart';
 
 import 'package:hospital_managment/src/view/const/bottomNavebar.dart';
 import 'package:hospital_managment/src/view/const/colors.dart';
 import 'package:hospital_managment/src/view/doctors/AddDoctor/department_select.dart';
+import 'package:hospital_managment/src/view/hospital_Profile/hospital_details.dart';
 
-import 'package:hospital_managment/src/view/hospital_Profile/sub/hospitalDetails/hospital_details.dart';
+import 'package:hospital_managment/src/view/hospital_Profile/sub/hospitalDetails/hospital_details_adding.dart';
 import 'package:hospital_managment/src/view/hospital_Profile/sub/settings/settings_list.dart';
 import 'package:hospital_managment/src/view/homePage/patient_List/patients_List.dart';
 import 'package:hospital_managment/src/view/hospital_Profile/sub/staff/staff_List.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class hospital_Profile extends StatefulWidget {
@@ -44,7 +47,7 @@ class _chatHomeState extends State<hospital_Profile> {
               ),
               Container(
                 decoration: BoxDecoration(
-                    color: bodygrey,
+                    color: bodyblack,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(40),
                         topRight: Radius.circular(40))),
@@ -55,30 +58,38 @@ class _chatHomeState extends State<hospital_Profile> {
                     SizedBox(
                       height: 40,
                     ),
+                    
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(23.0),
                         ),
-                        color: itemgrey,
-                        child: ListTile(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => hospital_details()));
-                          },
-                          leading: Icon(Icons.list_alt_rounded, color: white),
-                          title: Text(
-                            'Hospital details',
-                            style: GoogleFonts.poppins(color: white, fontSize: 20,),
-                          ),
-                          trailing: Icon(Icons.navigate_next, color: white),
-                        ),
+                        color: bodygrey,
+                        child:  ListTile(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => 
+                                             HospitalDetails()
+                                            ));
+                              },
+                              leading:
+                                  Icon(Icons.list_alt_rounded, color: white),
+                              title: Text(
+                                'Hospital details',
+                                style: GoogleFonts.poppins(
+                                  color: white,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              trailing: Icon(Icons.navigate_next, color: white),
+                            )
+                        
                       ),
                     ),
-                    SizedBox(       
+                    SizedBox(
                       height: 14,
                     ),
                     Padding(
@@ -87,12 +98,13 @@ class _chatHomeState extends State<hospital_Profile> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(23.0),
                         ),
-                        color: itemgrey,
+                        color: bodygrey,
                         child: ListTile(
                           onTap: () {
-                             Navigator.push(
-                                  context, MaterialPageRoute
-                              (builder:(_)=> SelectDepartment() ));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => SelectDepartment()));
                           },
                           leading: Icon(Icons.person_add_sharp, color: white),
                           title: Text(
@@ -112,13 +124,11 @@ class _chatHomeState extends State<hospital_Profile> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(23.0),
                         ),
-                        color: itemgrey,
+                        color: bodygrey,
                         child: ListTile(
                           onTap: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => StaffList()));
+                            Navigator.pushReplacement(context,
+                                MaterialPageRoute(builder: (_) => StaffList()));
                           },
                           leading: Icon(Icons.group, color: white),
                           title: Text(
@@ -138,12 +148,13 @@ class _chatHomeState extends State<hospital_Profile> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(23.0),
                         ),
-                        color: itemgrey,
+                        color: bodygrey,
                         child: ListTile(
                           onTap: () {
-                             Navigator.push(
-                                  context, MaterialPageRoute
-                              (builder:(_)=> patients_List() ));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => patients_List()));
                           },
                           leading: Icon(Icons.personal_injury_outlined,
                               color: white),
@@ -164,7 +175,7 @@ class _chatHomeState extends State<hospital_Profile> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(23.0),
                         ),
-                        color: itemgrey,
+                        color: bodygrey,
                         child: ListTile(
                           onTap: () {
                             //  Navigator.push(
@@ -189,7 +200,7 @@ class _chatHomeState extends State<hospital_Profile> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(23.0),
                         ),
-                        color: itemgrey,
+                        color: bodygrey,
                         child: ListTile(
                           onTap: () {
                             showSignOutDialog(context);
@@ -212,7 +223,7 @@ class _chatHomeState extends State<hospital_Profile> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(23.0),
                         ),
-                        color: itemgrey,
+                        color: bodygrey,
                         child: ListTile(
                           onTap: () {
                             Navigator.push(

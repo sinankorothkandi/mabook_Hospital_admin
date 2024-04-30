@@ -5,7 +5,9 @@ import 'package:flutter/widgets.dart';
 
 import 'package:hospital_managment/src/view/const/bottomNavebar.dart';
 import 'package:hospital_managment/src/view/const/colors.dart';
-import 'package:hospital_managment/src/view/hospital_Profile/sub/staff/staff_List.dart';
+import 'package:hospital_managment/src/view/hospital_Profile/sub/settings/appinfo.dart';
+import 'package:hospital_managment/src/view/hospital_Profile/sub/settings/privacyPolicy.dart';
+import 'package:hospital_managment/src/view/hospital_Profile/sub/settings/t&c.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class settings_list extends StatefulWidget {
@@ -61,10 +63,10 @@ class _chatHomeState extends State<settings_list> {
                         color: itemgrey,
                         child: ListTile(
                           onTap: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (_) => ));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => PrivacyPolicyScreen()));
                           },
                           leading: Icon(Icons.contact_page, color: white),
                           title: Text(
@@ -87,9 +89,8 @@ class _chatHomeState extends State<settings_list> {
                         color: itemgrey,
                         child: ListTile(
                           onTap: () {
-                            //  Navigator.push(
-                            //       context, MaterialPageRoute
-                            //   (builder:(_)=> TermsandConditions() ));
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => AppInfo()));
                           },
                           leading: Icon(Icons.info, color: white),
                           title: Text(
@@ -115,7 +116,7 @@ class _chatHomeState extends State<settings_list> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => StaffList()));
+                                    builder: (_) => TermsandConditions()));
                           },
                           leading: Icon(Icons.plagiarism_rounded, color: white),
                           title: Text(
