@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_managment/src/model/doctor_model.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class DoctorController extends ChangeNotifier {
   List<DoctorModel> doctorModel = [];
@@ -11,6 +13,9 @@ class DoctorController extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final doctorFormKey = GlobalKey<FormState>();
   File? profileImage;
+  File? imageFile;
+  String? imageUrls;
+  bool isImageSelected = false;
   final TextEditingController numberController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController categoryController = TextEditingController();
@@ -34,7 +39,6 @@ class DoctorController extends ChangeNotifier {
     _dropdownValue = newValue;
     notifyListeners();
   }
-
 
   Future<DateTime?> showDOBCalendarDialog(BuildContext context) async {
     final pickedDate = await showDatePicker(
@@ -64,24 +68,55 @@ class DoctorController extends ChangeNotifier {
     return pickedDate;
   }
 
-  Future<void> pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-    );
+  // Future<void> pickImage() async {
+  //   final pickedFile = await ImagePicker().pickImage(
+  //     source: ImageSource.gallery,
+  //   );
 
+  //   if (pickedFile != null) {
+  //     profileImage = File(pickedFile.path);
+  //     notifyListeners();
+  //   }
+  // }
+  pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      profileImage = File(pickedFile.path);
+      imageFile = File(pickedFile.path);
+      uploadImageToFirebase(File(pickedFile.path));
+      isImageSelected = true;
       notifyListeners();
+    } else {
+      // Get.snackbar("Error", "Image not selected",
+      //     snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
+    }
+  }
+
+  uploadImageToFirebase(File imageFile) async {
+    try {
+      print("----------------here---------------");
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child("doctor_profile")
+          .child("${DateTime.now().millisecondsSinceEpoch}");
+      final result = await ref.putFile(imageFile);
+      final fileUrl = await result.ref.getDownloadURL();
+      imageUrls = fileUrl;
+    } catch (e) {
+      // snackbar("error", 'Error in uploading image $e',
+      //     snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
     }
   }
 
   Future<void> addDoctorToFirebase(context) async {
     if (doctorFormKey.currentState!.validate()) {
       try {
+        String formattedDate = DateFormat('dd-MMM-yyyy').format(joiningdate!);
+        String Dob = DateFormat('dd-MMM-yyyy').format(dob!);
+
         await _firestore.collection('doctoreCollection').add({
           'name': nameController.text,
           'phone_number': int.parse(numberController.text),
-         
           'education': educationController.text,
           'experience': int.parse(experienceController.text),
           'bio': bioController.text,
@@ -89,13 +124,13 @@ class DoctorController extends ChangeNotifier {
           'consultancyfees': int.parse(consultancyfeesController.text),
           'statemedicalcouncil': statemedicalcouncilController.text,
           'imrregisterno': int.parse(imrregisternoController.text),
-          'dob': dob?.toIso8601String(),
+          'dob': Dob,
           'gender': _dropdownValue == 'One' ? 'Male' : 'Female',
-          'profile': profileImage?.path ?? '',
-          'joiningdate': joiningdate?.toIso8601String(),
+          'profile': imageUrls,
+          'joiningdate': formattedDate,
           'department': department,
         });
-        clearFormControllers();
+        // clearFormControllers();
       } catch (e) {
         print('Error adding doctor to Firebase: $e');
       }

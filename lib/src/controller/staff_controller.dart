@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_managment/src/model/staff_model.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class Staffcontroller extends ChangeNotifier {
   List<StaffModel> staffModel = [];
@@ -20,6 +22,9 @@ class Staffcontroller extends ChangeNotifier {
   // final TextEditingController joiningDateController = TextEditingController(); // New
   DateTime? dob;
   DateTime? joiningdate;
+   File? imageFile;
+      String? imageUrls;
+        bool isImageSelected = false;
 
   String _dropdownValue = 'One';
   String get dropdownValue => _dropdownValue;
@@ -38,7 +43,7 @@ class Staffcontroller extends ChangeNotifier {
     );
     if (pickedDate != null) {
       dob = pickedDate;
-      notifyListeners(); // Notify listeners when `dob` is updated
+      notifyListeners(); 
     }
     return pickedDate;
   }
@@ -52,25 +57,60 @@ class Staffcontroller extends ChangeNotifier {
     );
     if (pickedDate != null) {
       joiningdate = pickedDate;
-      notifyListeners(); // Notify listeners when `dob` is updated
+      notifyListeners(); 
     }
     return pickedDate;
   }
 
-  Future<void> pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-    );
+  // Future<void> pickImage() async {
+  //   final pickedFile = await ImagePicker().pickImage(
+  //     source: ImageSource.gallery,
+  //   );
 
+  //   if (pickedFile != null) {
+  //     profileImage = File(pickedFile.path); 
+  //     notifyListeners(); 
+  //   }
+  // }
+  selectImages() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      profileImage = File(pickedFile.path); // Store the picked image
-      notifyListeners(); // Notify the UI to update
+      imageFile =File(pickedFile.path);
+      uploadImageToFirebase(File(pickedFile.path));
+      isImageSelected = true;
+      notifyListeners();
+      
+    } else {
+      // Get.snackbar("Error", "Image not selected",
+      //     snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
+    }
+  }
+
+  uploadImageToFirebase(File imageFile) async {
+    try {
+      print("----------------here---------------");
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child("staff_profile")
+          .child("${DateTime.now().millisecondsSinceEpoch}");
+      final result = await ref.putFile(imageFile);
+      final fileUrl = await result.ref.getDownloadURL();
+      imageUrls = fileUrl;
+    
+    } catch (e) {
+      // snackbar("error", 'Error in uploading image $e',
+      //     snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
     }
   }
 
   Future<void> addStaffToFirebase(context) async {
     if (staffFormKey.currentState!.validate()) {
       try {
+    String formattedDate = DateFormat('dd-MMM-yyyy').format(joiningdate!);
+        String Dob = DateFormat('dd-MMM-yyyy').format(dob!);
+
+
         await _firestore.collection('staff').add({
           'name': nameController.text,
           'phone_number': int.parse(numberController.text),
@@ -78,12 +118,12 @@ class Staffcontroller extends ChangeNotifier {
           'education': educationController.text,
           'experience': int.parse(experienceController.text),
           'bio': bioController.text,
-          'dob': dob?.toIso8601String(),
+          'dob': Dob,
           'gender': _dropdownValue == 'One' ? 'Male' : 'Female',
-          'profile': profileImage?.path ?? '',
-          'joiningdate': joiningdate?.toIso8601String(),
+          'profile': imageUrls,
+          'joiningdate': formattedDate,
         });
-        clearFormControllers(); // Clear controllers after adding
+        clearFormControllers(); 
       } catch (e) {
         print('Error adding staff to Firebase: $e');
       }
@@ -104,23 +144,4 @@ class Staffcontroller extends ChangeNotifier {
     notifyListeners();
   }
 
-  //   // Function to fetch all staff data from Firestore
-  // Stream<List<StaffModel>> fetchStaffFromFirebase() {
-  //   return _firestore.collection('staff').snapshots().map((snapshot) {
-  //     return snapshot.docs.map((doc) {
-  //       final data = doc.data();
-  //       return StaffModel(
-  //         id: doc.id.hashCode, // Unique ID from Firebase
-  //         name: data['name'],
-  //         phoneNumber: data['phone_number'],
-  //         category: data['category'],
-  //         education: data['education'],
-  //         experience: data['experience'],
-  //         bio: data['bio'],
-  //         dob: data['dob'] ?? '', // If DOB is missing, return an empty string
-  //         gender: data['gender'] == 'Male', // Boolean based on gender string
-  //       );
-  //     }).toList();
-  //   });
-  // }
 }

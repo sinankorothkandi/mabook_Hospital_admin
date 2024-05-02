@@ -1,4 +1,3 @@
-import 'dart:io';
 
 class HospitalDetails {
   final int id;
@@ -6,7 +5,7 @@ class HospitalDetails {
   final String about;
   final String address;
   final List<String> time;
-  final List<File> image;
+  final List<String> image;
    bool isdetailsAdded = false;
 
   HospitalDetails(this.id,
@@ -24,8 +23,8 @@ class HospitalDetails {
       'about': about,
       'address': address,
       'time': time,
+      'images': image,
 
-      'images': image.map((file) => file.path).toList(),
     };
   }
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:io';
 import 'package:hospital_managment/src/view/const/colors.dart';
-import 'package:hospital_managment/src/view/hospital_Profile/sub/staff/addStaff/addStaff.dart';
+import 'package:hospital_managment/src/view/hospital_Profile/sub/staff/addStaff/add_staff.dart';
 import 'package:hospital_managment/src/view/hospital_Profile/sub/staff/staff_details.dart';
 
 class StaffList extends StatelessWidget {
@@ -31,7 +30,7 @@ class StaffList extends StatelessWidget {
           IconButton(
               onPressed: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => staff_add()));
+                    context, MaterialPageRoute(builder: (_) => StaffAdd()));
               },
               icon: const Icon(
                 Icons.person_add_alt_1_outlined,
@@ -65,18 +64,17 @@ class StaffList extends StatelessWidget {
                 final doc = staffDocs[index];
                 final staffData = doc.data() as Map<String, dynamic>;
 
-                // Handle the case where 'profile' might be null or empty
-                final profilePath = staffData.containsKey('profile') &&
-                        staffData['profile'] != null
-                    ? staffData['profile']
-                    : '';
+              
+              final profilePath = staffData.containsKey('profile') && staffData['profile'] != null
+        ? staffData['profile']
+        : '';
 
                 return ListTile(
                   leading: profilePath.isNotEmpty
                       ? CircleAvatar(
                           radius: 25,
                           backgroundColor: bodyblack,
-                          backgroundImage: FileImage(File(profilePath)),
+                          backgroundImage: NetworkImage(profilePath),
                         )
                       : const CircleAvatar(
                           radius: 25,
@@ -84,11 +82,11 @@ class StaffList extends StatelessWidget {
                           child: Icon(
                             Icons.person,
                             color: grey,
-                          )), // Default avatar
+                          )), 
                   title: Text(
                     staffData['name'],
                     style: const TextStyle(color: white),
-                  ), // Safe text retrieval
+                  ), 
                   subtitle: Text(
                     'Category: ${staffData.containsKey("category") ? staffData["category"].toString() : "N/A"}',
                     style: const TextStyle(color: grey),

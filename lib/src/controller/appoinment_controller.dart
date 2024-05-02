@@ -1,10 +1,8 @@
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_managment/src/model/appointmentModel.dart';
-import 'package:hospital_managment/src/model/doctor_model.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class AppointmentController extends ChangeNotifier {
   List<AppointmentModel> doctorModel = [];
@@ -13,7 +11,7 @@ class AppointmentController extends ChangeNotifier {
   final doctorFormKey = GlobalKey<FormState>();
   DateTime? dob;
   DateTime? date;
-    final appointmentFormKey = GlobalKey<FormState>();
+  final appointmentFormKey = GlobalKey<FormState>();
   final TextEditingController numberController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController departmentController = TextEditingController();
@@ -27,7 +25,6 @@ class AppointmentController extends ChangeNotifier {
     _dropdownValue = newValue;
     notifyListeners();
   }
-
 
   Future<DateTime?> showDOBCalendarDialog(BuildContext context) async {
     final pickedDate = await showDatePicker(
@@ -57,19 +54,21 @@ class AppointmentController extends ChangeNotifier {
     return pickedDate;
   }
 
-
   Future<void> addappoinmentToFirebase(context) async {
     if (appointmentFormKey.currentState!.validate()) {
       try {
+        String Date = DateFormat('dd-MMM-yyyy').format(date!);
+        String Dob = DateFormat('dd-MMM-yyyy').format(dob!);
+
         await _firestore.collection('appoinments').add({
           'name': nameController.text,
           'phone_number': int.parse(numberController.text),
           'address': addressController.text,
           'doctor': doctorController.text,
           'department': departmentController.text,
-          'dob': dob?.toIso8601String(),
+          'dob': Dob,
           'gender': _dropdownValue == 'One' ? 'Male' : 'Female',
-          'date': date?.toIso8601String(),
+          'date': Date,
         });
         clearFormControllers();
       } catch (e) {
@@ -86,7 +85,7 @@ class AppointmentController extends ChangeNotifier {
     departmentController.clear();
     doctorController.clear();
     dob = null;
-   date = null;
+    date = null;
     notifyListeners();
   }
 }

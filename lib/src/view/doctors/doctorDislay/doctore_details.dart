@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:io';
-
 import 'package:hospital_managment/src/view/const/colors.dart';
-import 'package:hospital_managment/src/view/doctors/doctor_information.dart';
+import 'package:hospital_managment/src/view/doctors/doctorDislay/doctorInformation/doctor_information.dart';
 
-class doctoreDetailPage extends StatelessWidget {
+class DoctoreDetailPage extends StatelessWidget {
   final Map<String, dynamic> doctorData;
 
-  const doctoreDetailPage({super.key, required this.doctorData});
+  const DoctoreDetailPage({super.key, required this.doctorData});
 
   @override
   Widget build(BuildContext context) {
-    final profilePath =
-        doctorData.containsKey('profile') && doctorData['profile'] != null
-            ? doctorData['profile']
-            : '';
+     final profilePath = doctorData.containsKey('profile') && doctorData['profile'] != null
+        ? doctorData['profile']
+        : '';
 
     return Scaffold(
       backgroundColor: bodyblack,
@@ -41,9 +38,9 @@ class doctoreDetailPage extends StatelessWidget {
             Row(
               children: [
                 profilePath.isNotEmpty
-                    ? CircleAvatar(
-                        backgroundColor: bodygrey,
-                        backgroundImage: FileImage(File(profilePath)),
+                    ?CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        backgroundImage: NetworkImage(profilePath), 
                         radius: 40,
                       )
                     : const CircleAvatar(
@@ -97,7 +94,7 @@ class doctoreDetailPage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (_) =>
-                                doctorInformation(doctorData: doctorData)));
+                                DoctorInformation(doctorData: doctorData)));
                   },
                   leading: const Icon(
                     Icons.person_pin_outlined,

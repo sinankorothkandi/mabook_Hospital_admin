@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
@@ -9,25 +10,55 @@ class HospitalDetailsController extends ChangeNotifier {
   final hospitalDetailsKey = GlobalKey<FormState>();
 
   List<TextEditingController> timeControllers =
-      List.generate(7, (_) => TextEditingController()); 
-  List<XFile> imageFilelist = <XFile>[];
+      List.generate(7, (_) => TextEditingController());
+  List<File> imageFilelist = [];
   bool isImageSelected = false;
-
+  bool isLoading = false;
+  List<String> imageUrls = [];
 
   final TextEditingController numberController = TextEditingController();
   final TextEditingController aboutController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
 
-  void selectImages() async {
-    final List<XFile> selectedImages = await ImagePicker().pickMultiImage();
-    if (selectedImages.isNotEmpty) {
-      imageFilelist.addAll(selectedImages);
+
+  selectImages() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      imageFilelist.add(File(pickedFile.path));
+      uploadImageToFirebase(File(pickedFile.path));
       isImageSelected = true;
       notifyListeners();
+      
+    } else {
+      // Get.snackbar("Error", "Image not selected",
+      //     snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
     }
   }
 
-  Future<void> addOrUpdateHospitalDetails( context) async {
+  uploadImageToFirebase(File imageFile) async {
+    try {
+      print("----------------here---------------");
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child("images")
+          .child("${DateTime.now().millisecondsSinceEpoch}");
+      isLoading = true;
+      final result = await ref.putFile(imageFile);
+      final fileUrl = await result.ref.getDownloadURL();
+      imageUrls.add(fileUrl);
+      print(imageUrls);
+      isLoading = false;
+      // Get.snackbar("Success", 'Image ${imageUrls.length} successfully saved',
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     backgroundColor: AppThemeData.green);
+    } catch (e) {
+      // snackbar("error", 'Error in uploading image $e',
+      //     snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
+    }
+  }
+
+  Future<void> addOrUpdateHospitalDetails(context) async {
     if (hospitalDetailsKey.currentState!.validate()) {
       try {
         List<String> times =
@@ -39,15 +70,13 @@ class HospitalDetailsController extends ChangeNotifier {
           about: aboutController.text,
           address: addressController.text,
           time: times,
-
-          image: imageFilelist.map((xfile) => File(xfile.path)).toList(),
+          image: imageUrls,
         );
 
         await _firestore
             .collection('hospitalDetails')
-            .doc('unique_document_id') 
-            .set(hospital.toJson(),
-                SetOptions(merge: true)); 
+            .doc('unique_document_id')
+            .set(hospital.toJson(), SetOptions(merge: true));
 
         clearFormControllers();
         Navigator.pop(context);

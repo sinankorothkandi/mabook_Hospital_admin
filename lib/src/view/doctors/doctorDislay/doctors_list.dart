@@ -1,13 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:hospital_managment/src/view/const/bottomNavebar.dart';
+import 'package:hospital_managment/src/view/const/bottom_navebar.dart';
 import 'package:hospital_managment/src/view/const/colors.dart';
-import 'package:hospital_managment/src/view/doctors/AddDoctor/department_select.dart';
-import 'package:hospital_managment/src/view/doctors/doctore_details.dart';
+import 'package:hospital_managment/src/view/doctors/department/department_select.dart';
+import 'package:hospital_managment/src/view/doctors/doctorDislay/doctore_details.dart';
 
 class doctor_List extends StatefulWidget {
   const doctor_List({super.key});
@@ -70,18 +66,18 @@ class _chatHomeState extends State<doctor_List> {
                   final doc = doctorDocs[index];
                   final doctorData = doc.data() as Map<String, dynamic>;
 
-                  final profilePath = doctorData.containsKey('profile') &&
-                          doctorData['profile'] != null
-                      ? doctorData['profile']
-                      : '';
+                 
+              final profilePath = doctorData.containsKey('profile') && doctorData['profile'] != null
+        ? doctorData['profile']
+        : '';
 
                   return ListTile(
                     leading: profilePath.isNotEmpty
-                        ? CircleAvatar(
-                            radius: 25,
-                            backgroundColor: bodygrey,
-                            backgroundImage: FileImage(File(profilePath)),
-                          )
+                        ?  CircleAvatar(
+                          radius: 25,
+                          backgroundColor: bodyblack,
+                          backgroundImage: NetworkImage(profilePath),
+                        )
                         : const CircleAvatar(
                             backgroundColor: bodygrey,
                             radius: 25,
@@ -106,7 +102,7 @@ class _chatHomeState extends State<doctor_List> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              doctoreDetailPage(doctorData: doctorData),
+                              DoctoreDetailPage(doctorData: doctorData),
                         ),
                       );
                     },

@@ -1,12 +1,11 @@
-// ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hospital_managment/src/view/appointment/appointment.dart';
+import 'package:hospital_managment/src/view/appointment/appoinment_display/appointment.dart';
 import 'package:hospital_managment/src/view/const/colors.dart';
-import 'package:hospital_managment/src/view/doctors/doctors_List.dart';
-import 'package:hospital_managment/src/view/homePage/home.dart';
-import 'package:hospital_managment/src/view/hospital_Profile/hospital_Profile.dart';
+import 'package:hospital_managment/src/view/doctors/doctorDislay/doctors_list.dart';
+import 'package:hospital_managment/src/view/homePage/home/home.dart';
+import 'package:hospital_managment/src/view/hospital_Profile/hospital%20profile/hospital_profile.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
@@ -46,13 +45,13 @@ class CustomBottomNavigationBar extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const Appointment_List()),
+                    builder: (context) => const AppointmentList()),
               );
             } else if (index == 3) {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const hospital_Profile()),
+                    builder: (context) => const HospitalProfile()),
               );
             }
             //else {

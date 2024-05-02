@@ -1,16 +1,11 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hospital_managment/src/controller/staff_controller.dart';
 import 'package:hospital_managment/src/view/const/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-// ignore: must_be_immutable
-class staff_add extends StatelessWidget {
-  staff_add({super.key});
+class StaffAdd extends StatelessWidget {
+  StaffAdd({super.key});
 
   String dropdownValue = 'One';
 
@@ -41,66 +36,73 @@ class staff_add extends StatelessWidget {
             key: stafcontroller.staffFormKey,
             child: Column(
               children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Container(
-                      height: 45,
-                      width: 225,
-                      decoration: const BoxDecoration(
-                        color: black,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          const Text(
-                            'Joining Date:',
-                            style: TextStyle(color: white, fontSize: 16),
-                          ),
-                          stafcontroller.dob == null
-                              ? Text(
-                                  DateFormat('   dd-MM-yy')
-                                      .format(DateTime.now()),
-                                  style: const TextStyle(color: Colors.grey),
-                                )
-                              : Text(
-                                  DateFormat('   dd-MM-yy')
-                                      .format(stafcontroller.dob!),
-                                  style: const TextStyle(color: Colors.grey),
-                                ),
-                          IconButton(
-                            onPressed: () async {
-                              await stafcontroller
-                                  .showJOINCalendarDialog(context);
-                            },
-                            icon: const Icon(
-                              Icons.calendar_month,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      )),
-                ),
                 const SizedBox(
                   height: 20,
                 ),
                 GestureDetector(
                   onTap: () {
-                    stafcontroller.pickImage();
+                    stafcontroller.selectImages();
                   },
                   child: CircleAvatar(
+                    backgroundColor: bodygrey,
                     radius: 50,
-                    backgroundImage: stafcontroller.profileImage != null
-                        ? FileImage(stafcontroller.profileImage!)
-                        : null, 
-                    child: stafcontroller.profileImage == null
-                        ? const Icon(Icons.add_photo_alternate)
-                        : null, 
+                    backgroundImage: stafcontroller.imageFile != null
+                        ? FileImage(stafcontroller.imageFile!)
+                        : null,
+                    child: stafcontroller.imageFile == null
+                        ? const Icon(
+                            Icons.add_photo_alternate,
+                            color: white,
+                          )
+                        : null,
                   ),
                 ),
                 const SizedBox(
-                  width: 20,
+                  width: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                        height: 45,
+                        width: 230,
+                        decoration: const BoxDecoration(
+                          color: black,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            const Text(
+                              'Joining Date:',
+                              style: TextStyle(color: white, fontSize: 16),
+                            ),
+                            stafcontroller.dob == null
+                                ? Text(
+                                    DateFormat('   dd-MM-yy')
+                                        .format(DateTime.now()),
+                                    style: const TextStyle(color: Colors.grey),
+                                  )
+                                : Text(
+                                    DateFormat('   dd-MM-yy')
+                                        .format(stafcontroller.dob!),
+                                    style: const TextStyle(color: Colors.grey),
+                                  ),
+                            IconButton(
+                              onPressed: () async {
+                                await stafcontroller
+                                    .showJOINCalendarDialog(context);
+                              },
+                              icon: const Icon(
+                                Icons.calendar_month,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        )),
+                  ),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(

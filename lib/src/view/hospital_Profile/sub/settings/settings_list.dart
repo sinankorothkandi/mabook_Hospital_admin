@@ -2,22 +2,22 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hospital_managment/src/view/const/bottom_navebar.dart';
 
-import 'package:hospital_managment/src/view/const/bottomNavebar.dart';
 import 'package:hospital_managment/src/view/const/colors.dart';
 import 'package:hospital_managment/src/view/hospital_Profile/sub/settings/appinfo.dart';
-import 'package:hospital_managment/src/view/hospital_Profile/sub/settings/privacyPolicy.dart';
-import 'package:hospital_managment/src/view/hospital_Profile/sub/settings/t&c.dart';
+import 'package:hospital_managment/src/view/hospital_Profile/sub/settings/privacy_policy.dart';
+import 'package:hospital_managment/src/view/hospital_Profile/sub/settings/t_and_c.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class settings_list extends StatefulWidget {
-  const settings_list({super.key});
+class SettingsList extends StatefulWidget {
+  const SettingsList({super.key});
 
   @override
-  State<settings_list> createState() => _chatHomeState();
+  State<SettingsList> createState() => _SettingsListState();
 }
 
-class _chatHomeState extends State<settings_list> {
+class _SettingsListState extends State<SettingsList> {
   int currentIndex = 3;
 
   @override

@@ -2,17 +2,17 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:hospital_managment/src/view/homePage/home.dart';
+import 'package:hospital_managment/src/view/homePage/home/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class mysplashScreen extends StatefulWidget {
-  const mysplashScreen({super.key});
+class MySplashScreen extends StatefulWidget {
+  const MySplashScreen({super.key});
 
   @override
-  State<mysplashScreen> createState() => _mysplashScreenState();
+  State<MySplashScreen> createState() => _MySplashScreenState();
 }
 
-class _mysplashScreenState extends State<mysplashScreen> {
+class _MySplashScreenState extends State<MySplashScreen> {
   @override
 
   void initState() {

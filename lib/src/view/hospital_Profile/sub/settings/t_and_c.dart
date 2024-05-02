@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hospital_managment/src/view/const/colors.dart';
@@ -21,7 +19,7 @@ class TermsandConditions extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 66,
                 left: 30,
                 right: 30,
@@ -38,7 +36,7 @@ class TermsandConditions extends StatelessWidget {
                           color: white),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -50,7 +48,7 @@ class TermsandConditions extends StatelessWidget {
             ),
             // SizedBox(height: 20,),
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 66,
                 left: 30,
                 right: 30,
@@ -67,7 +65,7 @@ class TermsandConditions extends StatelessWidget {
                           color: white),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -78,7 +76,7 @@ class TermsandConditions extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 66,
                 left: 30,
                 right: 30,
@@ -95,7 +93,7 @@ class TermsandConditions extends StatelessWidget {
                           color: white),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -106,7 +104,7 @@ class TermsandConditions extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 66,
                 left: 30,
                 right: 30,
@@ -123,7 +121,7 @@ class TermsandConditions extends StatelessWidget {
                           color: white),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -134,7 +132,7 @@ class TermsandConditions extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 66,
                 left: 30,
                 right: 30,
@@ -151,7 +149,7 @@ class TermsandConditions extends StatelessWidget {
                           color: white),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -162,7 +160,7 @@ class TermsandConditions extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 66,
                 left: 30,
                 right: 30,
@@ -179,7 +177,7 @@ class TermsandConditions extends StatelessWidget {
                           color: white),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -190,7 +188,7 @@ class TermsandConditions extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 66,
                 left: 30,
                 right: 30,
@@ -207,7 +205,7 @@ class TermsandConditions extends StatelessWidget {
                           color: white),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -218,7 +216,7 @@ class TermsandConditions extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 66,
                 left: 30,
                 right: 30,
@@ -235,7 +233,7 @@ class TermsandConditions extends StatelessWidget {
                           color: white),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -246,7 +244,7 @@ class TermsandConditions extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 66,
                 left: 30,
                 right: 30,
@@ -263,7 +261,7 @@ class TermsandConditions extends StatelessWidget {
                           color: white),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(

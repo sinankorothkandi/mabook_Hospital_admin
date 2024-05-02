@@ -1,7 +1,5 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hospital_managment/src/view/const/colors.dart';
 
@@ -11,10 +9,9 @@ class StaffDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final profilePath =
-        staffData.containsKey('profile') && staffData['profile'] != null
-            ? staffData['profile']
-            : '';
+    final profilePath = staffData.containsKey('profile') && staffData['profile'] != null
+        ? staffData['profile']
+        : '';
     return Scaffold(
       backgroundColor: bodyblack,
       appBar: AppBar(
@@ -45,11 +42,11 @@ class StaffDetailPage extends StatelessWidget {
               Row(
                 children: [
                   profilePath.isNotEmpty
-                      ? CircleAvatar(
-                          backgroundColor: bodygrey,
-                          backgroundImage: FileImage(File(profilePath)),
-                          radius: 40,
-                        )
+                      ?CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        backgroundImage: NetworkImage(profilePath), 
+                        radius: 40,
+                      )
                       : const CircleAvatar(
                           radius: 40,
                           backgroundColor: bodygrey,
